@@ -1,24 +1,25 @@
-import { StyleSheet, Text, View } from "react-native";
+import { Pressable, StyleSheet, Text, View } from "react-native";
 import { AntDesign, Fontisto } from "@expo/vector-icons";
 
-export default function Card({ isFlipped, idx }) {
+export default function Card({ isFlipped, idx, onPress }) {
   if (isFlipped) {
     return (
       <View style={styles.flippedCardContainer}>
-        <Text style={styles.label}>Quantos anos você tem?</Text>
-        <Fontisto
-          style={styles.turnCard}
-          name="arrow-return-left"
-          size={30}
-          color="#222"
-        />
+        <Text style={[styles.label, { textAlign: "center" }]}>
+          Quantos anos você tem?
+        </Text>
+        <Pressable style={styles.turnCard} onPress={onPress}>
+          <Fontisto name="arrow-return-left" size={30} color="#222" />
+        </Pressable>
       </View>
     );
   }
   return (
     <View style={styles.nonFlippedCardContainer}>
       <Text style={styles.label}>Pergunta {idx + 1}</Text>
-      <AntDesign name="rightsquareo" size={30} color="#222" />
+      <Pressable onPress={onPress}>
+        <AntDesign name="rightsquareo" size={30} color="#222" />
+      </Pressable>
     </View>
   );
 }

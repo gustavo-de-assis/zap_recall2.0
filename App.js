@@ -3,12 +3,19 @@ import { StyleSheet, Text, View } from "react-native";
 import PageHeader from "./components/PageHeader";
 import Footer from "./components/Footer";
 import Card from "./components/Card";
+import { useState } from "react";
 
 export default function App() {
+  const [cardFlip, setCardFlip] = useState(false);
+
+  const flipCard = () => {
+    setCardFlip(!cardFlip);
+  };
+
   return (
     <View style={styles.container}>
       <PageHeader />
-      <Card isFlipped={true} idx={0} />
+      <Card isFlipped={cardFlip} idx={0} onPress={flipCard} />
       <Footer />
       <StatusBar style="auto" />
     </View>
