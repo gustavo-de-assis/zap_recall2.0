@@ -28,7 +28,7 @@ export default function Footer() {
         />
       </View>
       <View style={styles.progress}>
-        <Text>Quantidade de Acertos</Text>
+        <Text style={styles.label}>Quantidade de Acertos</Text>
       </View>
     </View>
   );
@@ -59,7 +59,9 @@ const styles = StyleSheet.create({
     height: 90,
     alignItems: "center",
     justifyContent: "center",
+  },
+  label: {
+    fontSize: 18,
     color: "#222",
-    fontSize: 16,
   },
 });
