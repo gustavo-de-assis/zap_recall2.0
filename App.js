@@ -1,19 +1,13 @@
 import { StatusBar } from "expo-status-bar";
 import { StyleSheet, Text, View } from "react-native";
 import PageHeader from "./components/PageHeader";
-import ZapButton from "./components/ZapButton";
+import Footer from "./components/Footer";
 
 export default function App() {
   return (
     <View style={styles.container}>
       <PageHeader />
-      {/*  <ZapButton
-        color="#777"
-        label="teste"
-        onPress={() => {
-          alert("oi!");
-        }}
-      /> */}
+      <Footer />
       <StatusBar style="auto" />
     </View>
   );
