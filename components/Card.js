@@ -34,6 +34,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "center",
     paddingHorizontal: 20,
+    marginVertical: 10,
   },
   label: {
     fontSize: 32,

@@ -4,6 +4,7 @@ import PageHeader from "./components/PageHeader";
 import Footer from "./components/Footer";
 import Card from "./components/Card";
 import { useState } from "react";
+import Deck from "./components/Deck";
 
 export default function App() {
   const [cardFlip, setCardFlip] = useState(false);
@@ -15,7 +16,7 @@ export default function App() {
   return (
     <View style={styles.container}>
       <PageHeader />
-      <Card isFlipped={cardFlip} idx={0} onPress={flipCard} />
+      <Deck />
       <Footer />
       <StatusBar style="auto" />
     </View>
