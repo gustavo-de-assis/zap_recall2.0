@@ -1,14 +1,24 @@
 import { Pressable, StyleSheet, Text, View } from "react-native";
 import { AntDesign, Fontisto } from "@expo/vector-icons";
+import { useState } from "react";
 
-export default function Card({ isFlipped, idx, onPress }) {
-  if (isFlipped) {
+export default function Card({ idx, card }) {
+  const [content, setContent] = useState(card.question);
+  const [flipCard, setFlipCard] = useState(false);
+
+  const showAnswer = () => {
+    setContent(card.answer);
+  };
+
+  const showQuestion = () => {
+    setFlipCard(true);
+  };
+
+  if (flipCard) {
     return (
       <View style={styles.flippedCardContainer}>
-        <Text style={[styles.label, { textAlign: "center" }]}>
-          Quantos anos você tem?
-        </Text>
-        <Pressable style={styles.turnCard} onPress={onPress}>
+        <Text style={[styles.label, { textAlign: "center" }]}>{content}</Text>
+        <Pressable style={styles.turnCard} onPress={showAnswer}>
           <Fontisto name="arrow-return-left" size={30} color="#222" />
         </Pressable>
       </View>
@@ -17,7 +27,7 @@ export default function Card({ isFlipped, idx, onPress }) {
   return (
     <View style={styles.nonFlippedCardContainer}>
       <Text style={styles.label}>Pergunta {idx + 1}</Text>
-      <Pressable onPress={onPress}>
+      <Pressable onPress={showQuestion}>
         <AntDesign name="rightsquareo" size={30} color="#222" />
       </Pressable>
     </View>
@@ -50,6 +60,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     paddingHorizontal: 20,
     position: "relative",
+    marginVertical: 10,
   },
   turnCard: {
     position: "absolute",

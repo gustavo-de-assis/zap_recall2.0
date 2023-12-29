@@ -6,18 +6,14 @@ import { FlatList, SafeAreaView } from "react-native-web";
 
 export default function Deck() {
   const deck = decks.deck1;
+  const [viewdCards, setViewdCards] = useState([]);
 
   return (
     <SafeAreaView style={styles.deckContainer}>
       <FlatList
         data={deck}
         renderItem={({ item, index }) => (
-          <Card
-            key={item}
-            isFlipped={false}
-            idx={index}
-            onPress={() => alert("aaa")}
-          />
+          <Card key={index} idx={index} card={item} />
         )}
       />
     </SafeAreaView>
