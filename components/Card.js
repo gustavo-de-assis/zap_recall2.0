@@ -1,25 +1,41 @@
 import { Pressable, StyleSheet, Text, View } from "react-native";
 import { AntDesign, Fontisto } from "@expo/vector-icons";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
-export default function Card({ idx, card, viewdCards, onCardFlip }) {
+export default function Card({
+  idx,
+  card,
+  viewedCards,
+  onCardFlip,
+  cardSelection,
+  selected,
+}) {
   const [content, setContent] = useState(card.question);
   const [flipCard, setFlipCard] = useState(false);
+
+  useEffect(() => {
+    if (selected === idx) {
+      setFlipCard(true);
+      // Reset the selected card after flipping
+    }
+  }, [selected, idx, cardSelection]);
 
   const showAnswer = () => {
     setContent(card.answer);
   };
 
   const showQuestion = () => {
-    if (!viewdCards.includes(idx)) {
+    if (!viewedCards.includes(idx)) {
       setFlipCard(true);
-      onCardFlip(idx);
+      cardSelection(idx);
     }
   };
 
   const answeredQuestion = () => {
     setFlipCard(false);
     setContent(card.question);
+    onCardFlip(idx);
+    cardSelection(-1);
   };
 
   if (flipCard) {
@@ -41,7 +57,7 @@ export default function Card({ idx, card, viewdCards, onCardFlip }) {
   return (
     <View style={styles.nonFlippedCardContainer}>
       <Text style={styles.label}>Pergunta {idx + 1}</Text>
-      {viewdCards.includes(idx) ? (
+      {viewedCards.includes(idx) ? (
         <AntDesign name="check" size={30} color="#4a4" />
       ) : (
         <Pressable onPress={showQuestion}>
