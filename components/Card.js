@@ -2,7 +2,7 @@ import { Pressable, StyleSheet, Text, View } from "react-native";
 import { AntDesign, Fontisto } from "@expo/vector-icons";
 import { useState } from "react";
 
-export default function Card({ idx, card }) {
+export default function Card({ idx, card, viewdCards, onCardFlip }) {
   const [content, setContent] = useState(card.question);
   const [flipCard, setFlipCard] = useState(false);
 
@@ -11,25 +11,43 @@ export default function Card({ idx, card }) {
   };
 
   const showQuestion = () => {
-    setFlipCard(true);
+    if (!viewdCards.includes(idx)) {
+      setFlipCard(true);
+      onCardFlip(idx);
+    }
+  };
+
+  const answeredQuestion = () => {
+    setFlipCard(false);
+    setContent(card.question);
   };
 
   if (flipCard) {
     return (
       <View style={styles.flippedCardContainer}>
         <Text style={[styles.label, { textAlign: "center" }]}>{content}</Text>
-        <Pressable style={styles.turnCard} onPress={showAnswer}>
-          <Fontisto name="arrow-return-left" size={30} color="#222" />
-        </Pressable>
+        {content === card.question ? (
+          <Pressable style={styles.turnCard} onPress={showAnswer}>
+            <Fontisto name="arrow-return-left" size={30} color="#222" />
+          </Pressable>
+        ) : (
+          <Pressable style={styles.turnCard} onPress={answeredQuestion}>
+            <Fontisto name="arrow-return-right" size={30} color="#222" />
+          </Pressable>
+        )}
       </View>
     );
   }
   return (
     <View style={styles.nonFlippedCardContainer}>
       <Text style={styles.label}>Pergunta {idx + 1}</Text>
-      <Pressable onPress={showQuestion}>
-        <AntDesign name="rightsquareo" size={30} color="#222" />
-      </Pressable>
+      {viewdCards.includes(idx) ? (
+        <AntDesign name="check" size={30} color="#4a4" />
+      ) : (
+        <Pressable onPress={showQuestion}>
+          <AntDesign name="rightsquareo" size={30} color="#222" />
+        </Pressable>
+      )}
     </View>
   );
 }

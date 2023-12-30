@@ -7,12 +7,6 @@ import { useState } from "react";
 import Deck from "./components/Deck";
 
 export default function App() {
-  const [cardFlip, setCardFlip] = useState(false);
-
-  const flipCard = () => {
-    setCardFlip(!cardFlip);
-  };
-
   return (
     <View style={styles.container}>
       <PageHeader />
