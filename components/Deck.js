@@ -25,6 +25,10 @@ export default function Deck() {
     setSelectedCard(index);
   };
 
+  if (viewedCards.length === deck.questions.length) {
+    return <View style={styles.endGame}>Fim de Jogo</View>;
+  }
+
   if (selectedCard >= 0) {
     return (
       <View style={styles.deckContainer}>
@@ -65,5 +69,14 @@ const styles = StyleSheet.create({
     height: 500,
     gap: 10,
     alignItems: "center",
+  },
+  endGame: {
+    width: 380,
+    height: 500,
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "#eed",
+    borderRadius: 5,
+    fontSize: 40,
   },
 });
