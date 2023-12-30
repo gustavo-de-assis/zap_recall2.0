@@ -1,13 +1,20 @@
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { StyleSheet, View } from "react-native";
 import decks from "../assets/decks";
 import Card from "./Card";
 import { FlatList, SafeAreaView } from "react-native-web";
+import { ScoreContext } from "../contexts/ScoreContext";
 
 export default function Deck() {
   const deck = decks.deck1;
   const [viewedCards, setViewdCards] = useState([]);
   const [selectedCard, setSelectedCard] = useState(-1);
+  const { setNumOfQuestions } = useContext(ScoreContext);
+
+  useEffect(() => {
+    const numOfQuestions = deck.length;
+    setNumOfQuestions(numOfQuestions);
+  }, []);
 
   const onCardFlip = (index) => {
     setViewdCards((prevViewedCards) => [...prevViewedCards, index]);
