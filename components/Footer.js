@@ -2,35 +2,51 @@ import { StyleSheet, View, Text } from "react-native";
 import ZapButton from "./ZapButton";
 import { ScoreContext } from "../contexts/ScoreContext";
 import { useContext } from "react";
+import { ButtonContext } from "../contexts/ButtonContext";
 
 export default function Footer() {
-  const { score } = useContext(ScoreContext);
+  const { score, updateScore, deckTheme } = useContext(ScoreContext);
+  const { buttonsState, deactivateButtons } = useContext(ButtonContext);
 
   return (
     <View style={styles.footerContainer}>
-      <View style={styles.buttons}>
-        <ZapButton
-          label="Não Lembrei"
-          color="#f33"
-          onPress={() => {
-            alert("aaa");
-          }}
-        />
-        <ZapButton
-          label="Quase Não Lembrei"
-          color="#ed2"
-          onPress={() => {
-            alert("bbb");
-          }}
-        />
-        <ZapButton
-          label="Zap!"
-          color="#3a3"
-          onPress={() => {
-            alert("ccc");
-          }}
-        />
-      </View>
+      {!buttonsState.visibility ? (
+        <View style={styles.label}>{deckTheme}</View>
+      ) : (
+        <View style={styles.buttons}>
+          <ZapButton
+            label="Não Lembrei"
+            color={buttonsState.active === true ? "#f33" : "#aaa"}
+            onPress={() => {
+              if (buttonsState.active === true) {
+                alert("Que Pena!");
+                deactivateButtons();
+              }
+            }}
+          />
+          <ZapButton
+            label="Quase Não Lembrei"
+            color={buttonsState.active === true ? "#ed2" : "#aaa"}
+            onPress={() => {
+              if (buttonsState.active === true) {
+                alert("Quase!");
+                deactivateButtons();
+              }
+            }}
+          />
+          <ZapButton
+            label="Zap!"
+            color={buttonsState.active === true ? "#3a3" : "#aaa"}
+            onPress={() => {
+              if (buttonsState.active === true) {
+                alert("Parabéns!");
+                deactivateButtons();
+                updateScore();
+              }
+            }}
+          />
+        </View>
+      )}
       <View style={styles.progress}>
         <Text style={styles.label}>
           Quantidade de Acertos: {score.right} / {score.total}

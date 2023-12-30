@@ -9,11 +9,12 @@ export default function Deck() {
   const deck = decks.deck1;
   const [viewedCards, setViewdCards] = useState([]);
   const [selectedCard, setSelectedCard] = useState(-1);
-  const { setNumOfQuestions } = useContext(ScoreContext);
+  const { setNumOfQuestions, setDeckTheme } = useContext(ScoreContext);
 
   useEffect(() => {
-    const numOfQuestions = deck.length;
+    const numOfQuestions = deck.questions.length;
     setNumOfQuestions(numOfQuestions);
+    setDeckTheme(deck.theme);
   }, []);
 
   const onCardFlip = (index) => {
@@ -30,7 +31,7 @@ export default function Deck() {
         <Card
           key={selectedCard}
           idx={selectedCard}
-          card={deck[selectedCard]}
+          card={deck.questions[selectedCard]}
           viewedCards={viewedCards}
           selected={selectedCard}
           onCardFlip={onCardFlip}
@@ -42,7 +43,7 @@ export default function Deck() {
   return (
     <SafeAreaView style={styles.deckContainer}>
       <FlatList
-        data={deck}
+        data={deck.questions}
         renderItem={({ item, index }) => (
           <Card
             key={index}

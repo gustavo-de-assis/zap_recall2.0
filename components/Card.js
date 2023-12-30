@@ -1,6 +1,7 @@
 import { Pressable, StyleSheet, Text, View } from "react-native";
 import { AntDesign, Fontisto } from "@expo/vector-icons";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
+import { ButtonContext } from "../contexts/ButtonContext";
 
 export default function Card({
   idx,
@@ -12,6 +13,8 @@ export default function Card({
 }) {
   const [content, setContent] = useState(card.question);
   const [flipCard, setFlipCard] = useState(false);
+  const { showButtons, resetButtonsState, activateButtons, buttonsState } =
+    useContext(ButtonContext);
 
   useEffect(() => {
     if (selected === idx) {
@@ -22,12 +25,14 @@ export default function Card({
 
   const showAnswer = () => {
     setContent(card.answer);
+    activateButtons();
   };
 
   const showQuestion = () => {
     if (!viewedCards.includes(idx)) {
       setFlipCard(true);
       cardSelection(idx);
+      showButtons();
     }
   };
 
@@ -36,6 +41,7 @@ export default function Card({
     setContent(card.question);
     onCardFlip(idx);
     cardSelection(-1);
+    resetButtonsState();
   };
 
   if (flipCard) {
@@ -46,6 +52,8 @@ export default function Card({
           <Pressable style={styles.turnCard} onPress={showAnswer}>
             <Fontisto name="arrow-return-left" size={30} color="#222" />
           </Pressable>
+        ) : buttonsState.active ? (
+          <View></View>
         ) : (
           <Pressable style={styles.turnCard} onPress={answeredQuestion}>
             <Fontisto name="arrow-return-right" size={30} color="#222" />
