@@ -1,7 +1,11 @@
 import { StyleSheet, View, Text } from "react-native";
 import ZapButton from "./ZapButton";
+import { ScoreContext } from "../contexts/ScoreContext";
+import { useContext } from "react";
 
 export default function Footer() {
+  const { score } = useContext(ScoreContext);
+
   return (
     <View style={styles.footerContainer}>
       <View style={styles.buttons}>
@@ -28,7 +32,9 @@ export default function Footer() {
         />
       </View>
       <View style={styles.progress}>
-        <Text style={styles.label}>Quantidade de Acertos</Text>
+        <Text style={styles.label}>
+          Quantidade de Acertos: {score.right} / {score.total}
+        </Text>
       </View>
     </View>
   );
