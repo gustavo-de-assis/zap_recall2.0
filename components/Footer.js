@@ -3,6 +3,7 @@ import ZapButton from "./ZapButton";
 import { ScoreContext } from "../contexts/ScoreContext";
 import { useContext } from "react";
 import { ButtonContext } from "../contexts/ButtonContext";
+import swal from "sweetalert";
 
 export default function Footer() {
   const { score, updateScore, deckTheme } = useContext(ScoreContext);
@@ -19,7 +20,7 @@ export default function Footer() {
             color={buttonsState.active === true ? "#f33" : "#aaa"}
             onPress={() => {
               if (buttonsState.active === true) {
-                alert("Que Pena!");
+                swal("Que pena!", "Se esforce um pouco mais", "error");
                 deactivateButtons();
               }
             }}
@@ -29,7 +30,7 @@ export default function Footer() {
             color={buttonsState.active === true ? "#ed2" : "#aaa"}
             onPress={() => {
               if (buttonsState.active === true) {
-                alert("Quase!");
+                swal("Quase!", "Continue estudando...", "warning");
                 deactivateButtons();
               }
             }}
@@ -39,7 +40,7 @@ export default function Footer() {
             color={buttonsState.active === true ? "#3a3" : "#aaa"}
             onPress={() => {
               if (buttonsState.active === true) {
-                alert("Parabéns!");
+                swal("Parabéns!", "Você lembrou da resposta!", "success");
                 deactivateButtons();
                 updateScore();
               }
