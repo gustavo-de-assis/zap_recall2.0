@@ -19,7 +19,6 @@ export default function Card({
   useEffect(() => {
     if (selected === idx) {
       setFlipCard(true);
-      // Reset the selected card after flipping
     }
   }, [selected, idx, cardSelection]);
 

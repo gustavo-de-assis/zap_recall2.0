@@ -1,30 +1,32 @@
 import { StatusBar } from "expo-status-bar";
-import { StyleSheet, View } from "react-native";
-import PageHeader from "./components/PageHeader";
-import Footer from "./components/Footer";
-import Deck from "./components/Deck";
 import ScoreProvider from "./contexts/ScoreContext";
 import ButtonProvider from "./contexts/ButtonContext";
+import Game from "./pages/Game";
+import Home from "./pages/Home";
+import { NavigationContainer } from "@react-navigation/native";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+
+const Stack = createNativeStackNavigator();
 
 export default function App() {
   return (
     <ButtonProvider>
       <ScoreProvider>
-        <View style={styles.container}>
-          <PageHeader />
-          <Deck />
-          <Footer />
+        <NavigationContainer>
+          <Stack.Navigator
+            initialRouteName="Home"
+            screenOptions={{ headerShown: false }}
+          >
+            <Stack.Screen name="Home" component={Home} />
+            <Stack.Screen
+              name="Game"
+              component={Game}
+              options={{ title: "Overview" }}
+            />
+          </Stack.Navigator>
           <StatusBar style="auto" />
-        </View>
+        </NavigationContainer>
       </ScoreProvider>
     </ButtonProvider>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#FB6B6B",
-    alignItems: "center",
-  },
-});
