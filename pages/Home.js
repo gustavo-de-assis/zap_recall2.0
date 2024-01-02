@@ -1,12 +1,33 @@
 import { Image, Pressable, StyleSheet, Text, View } from "react-native";
+import { useFonts, Righteous_400Regular } from "@expo-google-fonts/righteous";
+import * as SplashScreen from "expo-splash-screen";
+import { useCallback } from "react";
+
+SplashScreen.preventAutoHideAsync();
 
 export default function Home({ navigation }) {
   const icon = require("../assets/zap.png");
 
+  let [fontsLoaded] = useFonts({
+    Righteous_400Regular,
+  });
+
+  const onLayoutRootView = useCallback(async () => {
+    if (fontsLoaded) {
+      await SplashScreen.hideAsync();
+    }
+  }, [fontsLoaded]);
+
+  if (!fontsLoaded) {
+    return null;
+  }
+
   return (
-    <View style={styles.container}>
+    <View style={styles.container} onLayout={onLayoutRootView}>
       <Image source={icon} style={styles.image} />
-      <Text style={styles.label}>Zap Recall</Text>
+      <Text style={[styles.label, { fontFamily: "Righteous_400Regular" }]}>
+        Zap Recall
+      </Text>
       <Pressable
         style={styles.button}
         onPress={() => {
@@ -35,14 +56,16 @@ const styles = StyleSheet.create({
   },
   button: {
     width: 200,
-    height: 80,
+    height: 60,
     backgroundColor: "#edd",
     alignItems: "center",
     justifyContent: "center",
     borderRadius: 5,
+    borderWidth: 2,
+    borderColor: "#aB5B5B",
   },
   label: {
-    fontSize: 40,
+    fontSize: 60,
     color: "#fff",
   },
 });

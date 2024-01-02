@@ -18,11 +18,7 @@ export default function App() {
             screenOptions={{ headerShown: false }}
           >
             <Stack.Screen name="Home" component={Home} />
-            <Stack.Screen
-              name="Game"
-              component={Game}
-              options={{ title: "Overview" }}
-            />
+            <Stack.Screen name="Game" component={Game} />
           </Stack.Navigator>
           <StatusBar style="auto" />
         </NavigationContainer>

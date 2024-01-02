@@ -1,11 +1,11 @@
 import { useContext, useEffect, useState } from "react";
-import { StyleSheet, View } from "react-native";
+import { StyleSheet, View, Text, Pressable } from "react-native";
 import decks from "../assets/decks";
 import Card from "./Card";
 import { FlatList, SafeAreaView } from "react-native-web";
 import { ScoreContext } from "../contexts/ScoreContext";
 
-export default function Deck() {
+export default function Deck({ navigation }) {
   const deck = decks.deck1;
   const [viewedCards, setViewdCards] = useState([]);
   const [selectedCard, setSelectedCard] = useState(-1);
@@ -26,7 +26,19 @@ export default function Deck() {
   };
 
   if (viewedCards.length === deck.questions.length) {
-    return <View style={styles.endGame}>Fim de Jogo</View>;
+    return (
+      <View style={styles.endGame}>
+        <Text style={styles.label}>Acabaram os Cartões!</Text>
+        <Pressable
+          style={styles.button}
+          onPress={() => {
+            navigation.navigate("Home");
+          }}
+        >
+          <Text style={{ fontSize: 20 }}>Retornar</Text>
+        </Pressable>
+      </View>
+    );
   }
 
   if (selectedCard >= 0) {
@@ -74,9 +86,21 @@ const styles = StyleSheet.create({
     width: 380,
     height: 500,
     alignItems: "center",
-    justifyContent: "center",
+    justifyContent: "space-evenly",
     backgroundColor: "#eed",
     borderRadius: 5,
+  },
+  label: {
     fontSize: 40,
+  },
+  button: {
+    width: 200,
+    height: 60,
+    backgroundColor: "#eee",
+    alignItems: "center",
+    justifyContent: "center",
+    borderRadius: 5,
+    borderWidth: 2,
+    borderColor: "#aaa",
   },
 });

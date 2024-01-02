@@ -17,12 +17,17 @@ export default function ScoreProvider({ children }) {
     setScore((previousScore) => ({ ...previousScore, total: numOfQuestions }));
   };
 
+  const resetScore = () => {
+    setScore({ total: 0, right: 0 });
+  };
+
   return (
     <ScoreContext.Provider
       value={{
         score,
         deckTheme,
         updateScore,
+        resetScore,
         setNumOfQuestions,
         setDeckTheme,
       }}
